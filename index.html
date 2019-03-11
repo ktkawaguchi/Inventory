@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.scannerdetection.js"></script>
+    <script type="text/javascript">
+    $(document).scannerDetection({
+        timeBeforeScanTest: 200, // wait for the next character for upto 200ms
+        startChar: [], // Prefix character for the cabled scanner (OPL6845R)
+        endChar: [13], // be sure the scan is complete if key 13 (enter) is detected
+        avgTimeByChar: 40, // it's not a barcode if a character takes longer than 40ms
+        onKeyDetect: function(event){console.log(event.which); return false;},
+        onComplete: function(barcode, qty){console.log(barcode); hello(barcode); } // main callback function	
+    });
+    </script>
+    <title>Test Scanner</title>
+</head>
+
+<body>
+    
+    Asset Number <input type="text" name="assetnumber" id="assetnumber" autofocus>
+    <button id="capture">Press Me</button>
+    <div><p id='new'>The asset number scanned is: </p></div>
+    
+    <script>
+        function hello (hello) {
+            $('#new').append(hello);
+        }
+    </script>
+
+</body>
+</html>
