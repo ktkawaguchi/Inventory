@@ -12,24 +12,21 @@
         startChar: [], // Prefix character for the cabled scanner (OPL6845R)
         endChar: [13], // be sure the scan is complete if key 13 (enter) is detected
         avgTimeByChar: 40, // it's not a barcode if a character takes longer than 40ms
+        // ignoreIfFocusOn: 'input',
         onKeyDetect: function(event){console.log(event.which); return false;},
-        onComplete: function(barcode, qty){console.log(barcode); hello(barcode); } // main callback function	
+        onComplete: function(barcode, qty){console.log(qty); hello(barcode); } // main callback function	
     });
     </script>
     <title>Test Scanner</title>
 </head>
 
 <body>
-    
+
     Asset Number <input type="text" name="assetnumber" id="assetnumber" autofocus>
     <button id="capture">Press Me</button>
     <div><p id='new'>The asset number scanned is: </p></div>
     
-    <script>
-        function hello (hello) {
-            $('#new').append(hello);
-        }
-    </script>
 
+    <script src="scannerlogic.js"></script>
 </body>
 </html>
