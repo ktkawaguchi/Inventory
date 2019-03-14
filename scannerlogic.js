@@ -1,14 +1,16 @@
 $(document).ready(function() {
+    var sampleData = {
+        "assetNumber" : "0333444",
+        "manufacturer": "HP",
+        "serialNumber":"2U3X12TE2"
+    }
 
-    var manData = ['hp','dell','apple'];
+    var manData = ['HP','Dell','Apple'];
     function hello (hello) {
         $('#new').append(hello);
     }
 
     for (var i=0; i < manData.length; i++) {
-    //     <label class="btn btn-secondary active">
-    //     <input type="radio" name="options" id="" value="checkedValue"> Display value
-    //   </label>
 
         //creates a label for the manufactuerer and adds to form
         var label = $('<label class="btn btn-secondary"></label>');
@@ -27,5 +29,10 @@ $(document).ready(function() {
     $('#btnSerialNumber').on('click',function(){
         $('#serialNumber').focus();
     });
+
+    //set up validation of fields
+
+    //create a new JSON object with entered data
+
 
 });
