@@ -1,10 +1,6 @@
 $(document).ready(function() {
     var recordArray = new Array();
-    var sampleData = {
-        "assetNumber" : "0333444",
-        "manufacturer": "HP",
-        "serialNumber":"2U3X12TE2"
-    }
+    var count = 0;
     var manData = ['HP','Dell','Apple'];
 
     //setup for the radio controls
@@ -38,18 +34,9 @@ $(document).ready(function() {
         var valString = valAssetNum + "  " + valSerialNum + "  " + valManufacturer;
         console.log(valAssetNum + "  " + valSerialNum + "  " + valManufacturer);
 
-        //update DOM to include new record may need to delete and use tables instead
-        var count = recordArray.length;
-        var newDiv = $('<div class="col-sm-8"></div>').attr('id',
-        count).text(valString).appendTo('#records');
+        //update DOM to include new record using tables
         createJSON(valAssetNum,valSerialNum,valManufacturer);
         console.log(recordArray);
-
-
-        // <div class="col-sm-8">
-        // <button type="button" class="btn btn-outline-primary col-sm-2">Delete</button>
-        // 032332 HP Elitedesk 3234Uajj
-        // </div>
 
         //reset fields
         $(this).closest('form').find("input[type=text], textarea").val("");
@@ -57,10 +44,23 @@ $(document).ready(function() {
 
     function createJSON (asset, serial, manufacturer) {
         var record = {
+            "ID" : count,
             "AssetNumber" : asset,
             "SerialNumber" : serial,
             "Manufacturer" : manufacturer
         }
+        count++;
+        updateDOM(record);
         recordArray.push(record);
+    }
+
+    function updateDOM (recordUpdate) {
+
+        //need to add functionality for delete of records
+        var tableRow = $('<tr></tr>').attr('id','recordRow'+recordUpdate.ID).appendTo('#recordBody');
+        var td = $('<td></td>').html('<button type="button" class="btn btn-primary">Delete</button>').appendTo('#recordRow'+recordUpdate.ID);
+        var td = $('<td></td>').text(recordUpdate.AssetNumber).appendTo('#recordRow'+recordUpdate.ID);
+        var td = $('<td></td>').text(recordUpdate.SerialNumber).appendTo('#recordRow'+recordUpdate.ID);
+        var td = $('<td></td>').text(recordUpdate.Manufacturer).appendTo('#recordRow'+recordUpdate.ID);
     }
 });

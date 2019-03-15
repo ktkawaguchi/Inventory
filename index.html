@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <!-- Toggable buttons test -->
+      <!-- Toggable buttons for manufacturer -->
       <div class="btn-group btn-group-toggle" data-toggle="buttons" id="manufacturerGroup">
           <!-- <label class="btn btn-secondary active">
             <input type="radio" name="options" id="" autocomplete="off" value="checkedValue"> Display value
@@ -47,14 +47,8 @@
       </div>
       <button type="button" class="btn btn-outline-primary col-sm-2" id="btnSubmit">Submit</button>
     </form>
-
-    <!-- Area where records in the array will populate dynamically -->
     
-    <div id="records" class="row">
-      <div class="col-sm-8"><button type="button" class="btn btn-outline-primary col-sm-2">Delete</button>032332 HP Elitedesk 3234Uajj</div>
-    </div>
-    
-    <!-- Maybe use a table instead of container -->
+    <!-- Table to display added records -->
     <table class="table table-striped">
       <thead>
         <tr>
@@ -65,18 +59,12 @@
           <th>SerialNumber</th>
         </tr>
       </thead>
-      <tbody>
+      <tbody id="recordBody">
         <tr>
           <td><button type="button" class="btn btn-primary">Delete</button></td>
-          <td scope="row">034444</td>
+          <td >Sample</td>
           <td>HP</td>
-          <td>Elitedesk</td>
           <td>23UA323K</td>
-        </tr>
-        <tr>
-          <td scope="row"></td>
-          <td></td>
-          <td></td>
         </tr>
       </tbody>
     </table>
