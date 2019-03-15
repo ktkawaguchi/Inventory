@@ -1,4 +1,5 @@
 $(document).ready(function() {
+    var recordArray = new Array();
     var sampleData = {
         "assetNumber" : "0333444",
         "manufacturer": "HP",
@@ -6,6 +7,7 @@ $(document).ready(function() {
     }
     var manData = ['HP','Dell','Apple'];
 
+    //setup for the radio controls
     for (var i=0; i < manData.length; i++) {
 
         //creates a label for the manufactuerer and adds to form
@@ -26,17 +28,28 @@ $(document).ready(function() {
         $('#serialNumber').focus();
     });
 
-    //set up validation of fields
-
     //create a new JSON object with entered data add it to array of records
-    var recordArray = new Array();
     $('#btnSubmit').on('click',function(){
+
+        //need to set up validation of fields
         var valAssetNum = $('#assetNumber').val();
         var valManufacturer = $("input:radio[name ='options']:checked").val();
         var valSerialNum = $('#serialNumber').val();
+        var valString = valAssetNum + "  " + valSerialNum + "  " + valManufacturer;
         console.log(valAssetNum + "  " + valSerialNum + "  " + valManufacturer);
+
+        //update DOM to include new record may need to delete and use tables instead
+        var count = recordArray.length;
+        var newDiv = $('<div class="col-sm-8"></div>').attr('id',
+        count).text(valString).appendTo('#records');
         createJSON(valAssetNum,valSerialNum,valManufacturer);
         console.log(recordArray);
+
+
+        // <div class="col-sm-8">
+        // <button type="button" class="btn btn-outline-primary col-sm-2">Delete</button>
+        // 032332 HP Elitedesk 3234Uajj
+        // </div>
 
         //reset fields
         $(this).closest('form').find("input[type=text], textarea").val("");
@@ -50,6 +63,4 @@ $(document).ready(function() {
         }
         recordArray.push(record);
     }
-
-
 });

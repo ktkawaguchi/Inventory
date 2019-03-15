@@ -47,7 +47,40 @@
       </div>
       <button type="button" class="btn btn-outline-primary col-sm-2" id="btnSubmit">Submit</button>
     </form>
+
+    <!-- Area where records in the array will populate dynamically -->
     
+    <div id="records" class="row">
+      <div class="col-sm-8"><button type="button" class="btn btn-outline-primary col-sm-2">Delete</button>032332 HP Elitedesk 3234Uajj</div>
+    </div>
+    
+    <!-- Maybe use a table instead of container -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>AssetNumber</th>
+          <th>Manufacturer</th>
+          <th>Model</th>
+          <th>SerialNumber</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><button type="button" class="btn btn-primary">Delete</button></td>
+          <td scope="row">034444</td>
+          <td>HP</td>
+          <td>Elitedesk</td>
+          <td>23UA323K</td>
+        </tr>
+        <tr>
+          <td scope="row"></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+
     <!-- Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
