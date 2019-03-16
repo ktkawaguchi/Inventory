@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="inventory.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script type="text/javascript" src="jquery.scannerdetection.js"></script>
     <script type="text/javascript">
@@ -20,54 +21,77 @@
     </script>
   </head>
   <body>
-    <!-- Asset Number -->
-    <form action="/" method="post">
-      <div class="form-group row">
-        <button type="button" class="btn btn-outline-primary col-sm-2" id="btnAssetNumber">Asset Number</button>
-        <div class="col-sm-8">
-            <input class="form-control reset" type="text" id="assetNumber" placeholder="AN" autofocus>
+    <div class="container">
+      <div class="py-5 text-center">
+        <h2>Inventory</h2>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <form action="/" method="post">
+            <div class="form-group row">
+
+              <!-- Asset Number -->
+              <div class="col-1">
+                <button type="button" class="btn btn-outline-primary" id="btnAssetNumber">Asset Number</button>
+              </div>
+              <div class="col-2">
+                <input class="form-control reset" type="text" id="assetNumber" placeholder="AN" autofocus>
+              </div>
+
+              <!-- Serial Number -->
+              <div class="col-1">
+                <button type="button" class="btn btn-outline-primary" id="btnSerialNumber">Serial Number</button>
+              </div>
+              <div class="col-5">
+                <input class="form-control reset" type="text" id="serialNumber" placeholder="SN">
+              </div>
+            </div>
+              
+              <!-- Toggable buttons for manufacturer -->
+              <div class="form-group row">
+                <div class="col-12">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons" id="manufacturerGroup"></div>
+                </div>
+              </div>
+
+                <!-- Dynamically add the models after manufacturer is selected -->
+                <!-- Change style tag when css is added -->
+              <div class="form-group row">
+                <div class="col">
+                  <div class="btn-group btn-group-toggle" data-toggle="buttons" id="modelGroup" style="display: none"></div>
+                    <!-- <span><label class="btn btn-secondary">Twenty</label></span> -->
+                    <!-- <span id="modelGroup"></span> -->
+                    
+                </div>
+              </div>
+              
+            <!-- Submission Button -->
+            <div class="form-group">
+              <button type="button" class="btn btn-outline-primary col-sm-2" id="btnSubmit">Submit</button>
+            </div>
+          </form>
         </div>
       </div>
-
-      <!-- Toggable buttons for manufacturer -->
-      <div class="form-group row">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons" id="manufacturerGroup">
-            <!-- <label class="btn btn-secondary active">
-              <input type="radio" name="options" id="" autocomplete="off" value="checkedValue"> Display value
-            </label> -->
-        </div>
-      </div>
-
-      <!-- Dynamically add the models after manufacturer is selected -->
-      <!-- Change sytle tag when css is added -->
-      <div class="form-group row">
-        <div class="btn-group btn-group-toggle" data-toggle="buttons" id="modelGroup" style="display: none"></div>
-      </div>
-
-      <!-- Serial Number -->
-      <div class="form-group row">
-          <button type="button" class="btn btn-outline-primary col-sm-2" id="btnSerialNumber">Serial Number</button>
-          <div class="col-sm-8">
-              <input class="form-control reset" type="text" id="serialNumber" placeholder="SN">
-          </div>
-      </div>
-      <button type="button" class="btn btn-outline-primary col-sm-2" id="btnSubmit">Submit</button>
-    </form>
+    </div>
     
     <!-- Table to display added records -->
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th></th>
-          <th>AssetNumber</th>
-          <th>Manufacturer</th>
-          <th>Model</th>
-          <th>SerialNumber</th>
-        </tr>
-      </thead>
-      <tbody id="recordBody">
-      </tbody>
-    </table>
+    <div class="container-fluid">
+      <div class="table-responsive">
+        <table class="table table-sm table-striped">
+          <thead>
+            <tr>
+              <th></th>
+              <th>AssetNumber</th>
+              <th>Manufacturer</th>
+              <th>Model</th>
+              <th>SerialNumber</th>
+            </tr>
+          </thead>
+          <tbody id="recordBody">
+          </tbody>
+        </table>
+      </div>
+    </div>
 
     <!-- Popper.js, then Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

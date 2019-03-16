@@ -2,7 +2,7 @@ $(document).ready(function() {
     var recordArray = new Array();
     var count = 0;
     var manData = ['HP','Dell','Apple'];
-    var modelDataHP = ['Z230','Elitedesk 800 sff','Elitebook 850 G3'];
+    var modelDataHP = ['Z230','Elitedesk 800 sff','Elitebook 850 G3','Elitedesk 800 sff','Elitebook 850 G3','Elitedesk 800 sff','Elitebook 850 G3','Elitedesk 800 sff','Elitebook 850 G3','Elitedesk 800 sff','Elitebook 850 G3','Elitedesk 800 sff','Elitebook 850 G3','Elitedesk 800 sff','Elitebook 850 G3','Elitedesk 800 sff','Elitebook 850 G3','Elitedesk 800 sff','Elitebook 850 G3','Elitedesk 800 sff','Elitebook 850 G3'];
     var modelDataDell = ['Inspiron 3000','Velicity 332'];
     var modelDataApple = ['iMac','MacBook Pro','iPad'];
 
@@ -10,7 +10,7 @@ $(document).ready(function() {
     for (var i=0; i < manData.length; i++) {
 
         //creates a label for the manufactuerer and adds to form
-        var label = $('<label class="btn btn-secondary"></label>');
+        var label = $('<label class="btn btn-info"></label>');
         label.attr('id','Manu_'+manData[i]).text(manData[i]).appendTo('#manufacturerGroup');
 
         //creates the actual input radio and adds to the form
@@ -22,32 +22,6 @@ $(document).ready(function() {
             $('#modelGroup').empty();
             createModelGroup(this.value);
         });
-    }
-
-    //adding selcted manufacturers models to the form
-    function createModelGroup(manuValue) {
-        var selectedManu;
-        $('#modelGroup').attr('style','');
-        console.log(manuValue);
-        if (manuValue==="HP"){
-            selectedManu = modelDataHP;
-        } else if (manuValue==="Dell") {
-            selectedManu = modelDataDell;
-        } else if (manuValue==="Apple") {
-            selectedManu = modelDataApple;
-        }
-        
-        for (var i=0;i<selectedManu.length;i++){
-
-            //creates a label for the manufactuerer and adds to form
-            var label = $('<label class="btn btn-secondary"></label>');
-            label.attr('id','Model_'+i).text(selectedManu[i]).appendTo('#modelGroup');
-
-            //creates the actual input radio and adds to the form
-            var modelRadio = $('<input name="models" autocomplete="off" type="radio">');
-            modelRadio.attr('id','radio_'+i).attr('value',selectedManu[i])
-                .appendTo('#Model_'+i);
-        }
     }
 
     //setting up the events on the buttons
@@ -73,6 +47,29 @@ $(document).ready(function() {
         $(this).closest('form').find("input[type=text], textarea").val("");
         $('#assetNumber').focus();
     });
+
+    //adding selcted manufacturers models to the form
+    function createModelGroup(manuValue) {
+        var selectedManu;
+        $('#modelGroup').attr('style','');
+        console.log(manuValue);
+        if (manuValue==="HP"){selectedManu = modelDataHP;
+        } else if (manuValue==="Dell") {
+            selectedManu = modelDataDell;
+        } else if (manuValue==="Apple") {
+            selectedManu = modelDataApple;
+        }
+        
+        for (var i=0;i<selectedManu.length;i++){
+            // var spanModel = $('<span class="btn-group-toggle"></span>');
+            // spanModel.attr('id','Span_'+i).appendTo('#modelGroup');
+            var labelModel = $('<label class="btn btn-secondary"></label>');
+            labelModel.attr('id','Model_'+i).text(selectedManu[i]).appendTo('#modelGroup');
+            var modelRadio = $('<input name="models" autocomplete="off" type="radio">');
+            modelRadio.attr('id','radio_'+i).attr('value',selectedManu[i])
+                .appendTo('#Model_'+i);
+        }
+    }
 
     function createJSON (asset, serial, manufacturer, model) {
         var record = {
