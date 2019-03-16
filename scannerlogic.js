@@ -55,16 +55,17 @@ $(document).ready(function() {
     }
 
     function updateDOM (recordUpdate) {
+        $('<tr></tr>').attr('id','recordRow'+recordUpdate.ID).appendTo('#recordBody');
+        $('<td></td>').attr('id','recordBtn'+recordUpdate.ID).appendTo('#recordRow'+recordUpdate.ID);
+        $('<button type="button" class="btn btn-primary">Delete</button>')
+            .attr('id','btn'+recordUpdate.ID).appendTo('#recordBtn'+recordUpdate.ID);
+        $('<td></td>').text(recordUpdate.AssetNumber).appendTo('#recordRow'+recordUpdate.ID);
+        $('<td></td>').text(recordUpdate.SerialNumber).appendTo('#recordRow'+recordUpdate.ID);
+        $('<td></td>').text(recordUpdate.Manufacturer).appendTo('#recordRow'+recordUpdate.ID);
 
-        //need to add functionality for delete of records
-        var tableRow = $('<tr></tr>').attr('id','recordRow'+recordUpdate.ID).appendTo('#recordBody');
-        var td = $('<td></td>').html(function(){
-            return "<button type=\"button\" id=\"btn\">Delete</button>"
-        }).appendTo('#recordRow'+recordUpdate.ID);
-        $('#btn'+recordUpdate.ID).attr('class','btn btn-primary');
-        
-        var td = $('<td></td>').text(recordUpdate.AssetNumber).appendTo('#recordRow'+recordUpdate.ID);
-        var td = $('<td></td>').text(recordUpdate.SerialNumber).appendTo('#recordRow'+recordUpdate.ID);
-        var td = $('<td></td>').text(recordUpdate.Manufacturer).appendTo('#recordRow'+recordUpdate.ID);
+        //button functionality to delete row
+        $('#btn'+recordUpdate.ID).on('click',function(){
+            $('#recordRow'+recordUpdate.ID).remove();
+        });
     }
 });
