@@ -30,13 +30,19 @@
       </div>
 
       <!-- Toggable buttons for manufacturer -->
-      <div class="btn-group btn-group-toggle" data-toggle="buttons" id="manufacturerGroup">
-          <!-- <label class="btn btn-secondary active">
-            <input type="radio" name="options" id="" autocomplete="off" value="checkedValue"> Display value
-          </label> -->
+      <div class="form-group row">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons" id="manufacturerGroup">
+            <!-- <label class="btn btn-secondary active">
+              <input type="radio" name="options" id="" autocomplete="off" value="checkedValue"> Display value
+            </label> -->
+        </div>
       </div>
 
       <!-- Dynamically add the models after manufacturer is selected -->
+      <!-- Change sytle tag when css is added -->
+      <div class="form-group row">
+        <div class="btn-group btn-group-toggle" data-toggle="buttons" id="modelGroup" style="display: none"></div>
+      </div>
 
       <!-- Serial Number -->
       <div class="form-group row">
@@ -60,12 +66,6 @@
         </tr>
       </thead>
       <tbody id="recordBody">
-        <tr>
-          <td><button type="button" class="btn btn-primary">Delete</button></td>
-          <td >Sample</td>
-          <td>Hardcoded</td>
-          <td>HTML</td>
-        </tr>
       </tbody>
     </table>
 
