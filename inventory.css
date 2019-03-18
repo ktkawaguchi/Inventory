@@ -1,4 +1,13 @@
 #modelGroup {
-    /* display: flex; */
-    flex-wrap: wrap;
+	/* display: flex; */
+	flex-wrap: wrap;
+}
+
+button {
+	float: left;
+}
+
+label {
+	margin: 3px;
+	border-radius: 20px;
 }

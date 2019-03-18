@@ -26,30 +26,30 @@
         <h2>Inventory</h2>
       </div>
       <div class="row">
-        <div class="col-12">
+        <div class="col">
           <form action="/" method="post">
             <div class="form-group row">
 
               <!-- Asset Number -->
-              <div class="col-1">
-                <button type="button" class="btn btn-outline-primary" id="btnAssetNumber">Asset Number</button>
+              <div class="col-auto">
+                <button type="button" class="btn btn-outline-primary" id="btnAssetNumber">Asset#</button>
               </div>
-              <div class="col-2">
-                <input class="form-control reset" type="text" id="assetNumber" placeholder="AN" autofocus>
+              <div class="col">
+                <input class="form-control" type="text" id="assetNumber" placeholder="Asset Number" autofocus>
               </div>
 
               <!-- Serial Number -->
-              <div class="col-1">
-                <button type="button" class="btn btn-outline-primary" id="btnSerialNumber">Serial Number</button>
+              <div class="col-auto">
+                <button type="button" class="btn btn-outline-primary" id="btnSerialNumber">Serial#</button>
               </div>
-              <div class="col-5">
-                <input class="form-control reset" type="text" id="serialNumber" placeholder="SN">
+              <div class="col">
+                <input class="form-control" type="text" id="serialNumber" placeholder="Serial Number">
               </div>
             </div>
               
               <!-- Toggable buttons for manufacturer -->
               <div class="form-group row">
-                <div class="col-12">
+                <div class="col">
                   <div class="btn-group btn-group-toggle" data-toggle="buttons" id="manufacturerGroup"></div>
                 </div>
               </div>
@@ -66,8 +66,10 @@
               </div>
               
             <!-- Submission Button -->
-            <div class="form-group">
+            <div class="form-group row">
+              <div class="col">
               <button type="button" class="btn btn-outline-primary col-sm-2" id="btnSubmit">Submit</button>
+              </div>
             </div>
           </form>
         </div>
