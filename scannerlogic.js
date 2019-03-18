@@ -1,4 +1,10 @@
+// TODO: Add a JSON to csv output
+// TODO: Add button for model name that doesn't exist will popup modal which will update DB
+// TODO: Add more fields for relevant information
 $(document).ready(function() {
+	// $.getScript('assetValidation.js', function() {
+	//     console.log('Script loaded but not necessarily executed.');
+	// });
 	var recordArray = new Array();
 	var count = 0;
 	var manData = [ 'HP', 'Dell', 'Apple' ];
@@ -25,32 +31,38 @@ $(document).ready(function() {
 		'Envy 700',
 		'Smartbook'
 	];
-	var modelDataDell = [ 'Inspiron 3000', 'Velicity 332' ];
-	var modelDataApple = [ 'iMac', 'MacBook Pro', 'iPad' ];
+	var modelDataDell = [ 'Inspiron 3000', 'Velicity 332', 'XPS 15', 'XPS 13', 'Alienware 15 R3' ];
+	var modelDataApple = [ 'iMac', 'MacBook Pro', 'iPad', 'iPhone X', 'MacBook Air', 'iMac Pro' ];
 
-	//setup for the radio controls
+	//creates the manufacturers radio buttons dynamically
 	for (var i = 0; i < manData.length; i++) {
-		//creates a label for the manufactuerer and adds to form
 		var label = $('<label class="btn btn-info"></label>');
 		label.attr('id', 'Manu_' + manData[i]).text(manData[i]).appendTo('#manufacturerGroup');
 
-		//creates the actual input radio and adds to the form
 		var manRadio = $('<input name="manufacturers" autocomplete="off" type="radio">');
 		manRadio.attr('id', 'radio_' + manData[i]).attr('value', manData[i]).appendTo('#Manu_' + manData[i]);
 
 		//adding event to radio buttons to add model data
 		$('#radio_' + manData[i]).change(function() {
-			$('#modelGroup').empty();
+			$('#modelGroup').css('opacity', 0).empty();
 			createModelGroup(this.value);
 		});
 	}
 
-	//setting up the events on the buttons
+	//setting up the click events on the buttons
 	$('#btnAssetNumber').on('click', function() {
 		$('#assetNumber').focus();
 	});
 	$('#btnSerialNumber').on('click', function() {
 		$('#serialNumber').focus();
+	});
+	$('#btnClear').on('click', function() {
+		$('form input:radio').each(function() {
+			$(this).prop('checked', false);
+		});
+		$(this).closest('form').find('input[type=text], textarea').val('');
+		$('#modelGroup').css('opacity', 0).empty();
+		$('#assetNumber').focus();
 	});
 
 	//create a new JSON object with entered data add it to array of records
@@ -75,7 +87,7 @@ $(document).ready(function() {
 	//adding selcted manufacturers models to the form
 	function createModelGroup(manuValue) {
 		var selectedManu;
-		$('#modelGroup').attr('style', '');
+		$('#modelGroup').css('opacity', 1);
 		console.log(manuValue);
 		if (manuValue === 'HP') {
 			selectedManu = modelDataHP;
@@ -86,8 +98,6 @@ $(document).ready(function() {
 		}
 
 		for (var i = 0; i < selectedManu.length; i++) {
-			// var spanModel = $('<span class="btn-group-toggle"></span>');
-			// spanModel.attr('id','Span_'+i).appendTo('#modelGroup');
 			var labelModel = $('<label class="btn btn-secondary"></label>');
 			labelModel.attr('id', 'Model_' + i).text(selectedManu[i]).appendTo('#modelGroup');
 			var modelRadio = $('<input name="models" autocomplete="off" type="radio">');
@@ -104,11 +114,11 @@ $(document).ready(function() {
 			Model: model
 		};
 		count++;
-		updateDOM(record);
+		updateTable(record);
 		recordArray.push(record);
 	}
 
-	function updateDOM(recordUpdate) {
+	function updateTable(recordUpdate) {
 		$('<tr></tr>').attr('id', 'recordRow' + recordUpdate.ID).appendTo('#recordBody');
 		$('<td></td>').attr('id', 'recordBtn' + recordUpdate.ID).appendTo('#recordRow' + recordUpdate.ID);
 		$('<button type="button" class="btn btn-primary">Delete</button>')
