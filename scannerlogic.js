@@ -75,6 +75,9 @@ $(document).ready(function() {
 		var valString = valAssetNum + '  ' + valSerialNum + '  ' + valManufacturer + ' ' + valModel;
 		console.log(valString);
 
+		//validate data
+		checkFields(valAssetNum, valSerialNum);
+
 		//update DOM to include new record using tables
 		createJSON(valAssetNum, valSerialNum, valManufacturer, valModel);
 		console.log(recordArray);
@@ -124,14 +127,44 @@ $(document).ready(function() {
 		$('<button type="button" class="btn btn-primary">Delete</button>')
 			.attr('id', 'btn' + recordUpdate.ID)
 			.appendTo('#recordBtn' + recordUpdate.ID);
-		$('<td></td>').text(recordUpdate.AssetNumber).appendTo('#recordRow' + recordUpdate.ID);
+		$('<td></td>').text(recordUpdate.AssetNumber).attr('class', 'tdAsset').appendTo('#recordRow' + recordUpdate.ID);
 		$('<td></td>').text(recordUpdate.Manufacturer).appendTo('#recordRow' + recordUpdate.ID);
 		$('<td></td>').text(recordUpdate.Model).appendTo('#recordRow' + recordUpdate.ID);
-		$('<td></td>').text(recordUpdate.SerialNumber).appendTo('#recordRow' + recordUpdate.ID);
+		$('<td></td>')
+			.text(recordUpdate.SerialNumber)
+			.attr('class', 'tdSerial')
+			.appendTo('#recordRow' + recordUpdate.ID);
 
 		//button functionality to delete row
 		$('#btn' + recordUpdate.ID).on('click', function() {
 			$('#recordRow' + recordUpdate.ID).remove();
 		});
+	}
+
+	function checkFields(assetNum, serialNum) {
+		// Make sure AN and SN are not empty
+		$('.tdAsset').each(function() {
+			var test = $(this).text();
+			if (test === assetNum) {
+				console.log('it matched something on the table');
+			}
+			console.log(test);
+		});
+		if (assetNum === $(this).text) {
+			alert($(this).html());
+			console.log('this matched an asset num');
+		}
+		// $('.tdAsset').each(function() {
+		// 	if (assetNum === $(this).val) {
+		// 		console.log('match found delete now');
+		// 	}
+		// });
+		if (assetNum === '') {
+			console.log('Empty asset number');
+		}
+		if (serialNum === '') {
+			console.log('Empty serial number');
+		}
+		// Make sure AN and SN do not match data already in table
 	}
 });
