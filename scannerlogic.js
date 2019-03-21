@@ -65,12 +65,11 @@ $(document).ready(function() {
 		$('#assetNumber').focus();
 	});
 	$('#btnExport').on('click', function() {
-		exportToCSV(recordArray);
+		exportToCSV(testHeaders, recordArray, 'thest');
 	});
 
 	//create a new JSON object with entered data add it to array of records
 	$('#btnSubmit').on('click', function() {
-		//need to set up validation of fields
 		var valAssetNum = $('#assetNumber').val();
 		var valManufacturer = $("input:radio[name ='manufacturers']:checked").val();
 		var valSerialNum = $('#serialNumber').val();
@@ -172,10 +171,8 @@ $(document).ready(function() {
 		}
 		return isValid;
 	}
-
-	function exportToCSV(records) {
-		var recordObject = JSON.stringify(records);
-		var array = typeof recordObject != 'object' ? JSON.parse(recordObject) : recordObject;
+	function convertToCSV(objArray) {
+		var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
 		var str = '';
 
 		for (var i = 0; i < array.length; i++) {
@@ -185,15 +182,49 @@ $(document).ready(function() {
 
 				line += array[i][index];
 			}
+
 			str += line + '\r\n';
 		}
-		if (navigator.appName != 'Microsoft Internet Explorer') {
-			window.open('data:text/csv;charset=utf-8,' + escape(str));
-		} else {
-			var popup = window.open('', 'csv', '');
-			popup.document.body.innerHTML = '<pre>' + str + '</pre>';
+
+		return str;
+	}
+
+	function exportToCSV(headers, items, fileTitle) {
+		if (headers) {
+			items.unshift(headers);
 		}
 
-		// return str;
+		// Convert Object to JSON
+		var jsonObject = JSON.stringify(items);
+		var csv = convertToCSV(jsonObject);
+
+		var exportedFilenmae = fileTitle + '.csv' || 'export.csv';
+
+		var blob = new Blob([ csv ], { type: 'text/csv;charset=utf-8;' });
+		if (navigator.msSaveBlob) {
+			// IE 10+
+			navigator.msSaveBlob(blob, exportedFilenmae);
+		} else {
+			var link = document.createElement('a');
+			if (link.download !== undefined) {
+				// feature detection
+				// browsers that support HTML5 download attribute
+				var url = URL.createObjectURL(blob);
+				link.setAttribute('href', url);
+				link.setAttribute('download', exportedFilenmae);
+				link.style.visibility = 'hidden';
+				document.body.appendChild(link);
+				link.click();
+				document.body.removeChild(link);
+			}
+		}
 	}
+
+	var testHeaders = {
+		ID: 'Record Row',
+		AssetNumber: 'Asset Number',
+		SerialNumber: 'Serial Number',
+		Manufacturer: 'Manufacturer',
+		Model: 'model'
+	};
 });
