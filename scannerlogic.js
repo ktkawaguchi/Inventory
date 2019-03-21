@@ -64,6 +64,9 @@ $(document).ready(function() {
 		$('#modelGroup').css('opacity', 0).empty();
 		$('#assetNumber').focus();
 	});
+	$('#btnExport').on('click', function() {
+		exportToCSV(recordArray);
+	});
 
 	//create a new JSON object with entered data add it to array of records
 	$('#btnSubmit').on('click', function() {
@@ -76,15 +79,15 @@ $(document).ready(function() {
 		console.log(valString);
 
 		//validate data
-		checkFields(valAssetNum, valSerialNum);
+		if (validateFields(valAssetNum, valSerialNum)) {
+			//update DOM to include new record using tables
+			createJSON(valAssetNum, valSerialNum, valManufacturer, valModel);
+			console.log(recordArray);
 
-		//update DOM to include new record using tables
-		createJSON(valAssetNum, valSerialNum, valManufacturer, valModel);
-		console.log(recordArray);
-
-		//reset text input fields
-		$(this).closest('form').find('input[type=text], textarea').val('');
-		$('#assetNumber').focus();
+			//reset text input fields
+			$(this).closest('form').find('input[type=text], textarea').val('');
+			$('#assetNumber').focus();
+		}
 	});
 
 	//adding selcted manufacturers models to the form
@@ -141,30 +144,56 @@ $(document).ready(function() {
 		});
 	}
 
-	function checkFields(assetNum, serialNum) {
+	function validateFields(assetNum, serialNum) {
+		var isValid = true;
 		// Make sure AN and SN are not empty
 		$('.tdAsset').each(function() {
 			var test = $(this).text();
 			if (test === assetNum) {
-				console.log('it matched something on the table');
+				console.log('Asset matched on table alerady!!');
+				isValid = false;
 			}
-			console.log(test);
 		});
-		if (assetNum === $(this).text) {
-			alert($(this).html());
-			console.log('this matched an asset num');
-		}
-		// $('.tdAsset').each(function() {
-		// 	if (assetNum === $(this).val) {
-		// 		console.log('match found delete now');
-		// 	}
-		// });
+		$('.tdSerial').each(function() {
+			var test = $(this).text();
+			if (serialNum === test) {
+				alert($(this).html());
+				console.log('This serial already exists!!');
+				isValid = false;
+			}
+		});
 		if (assetNum === '') {
 			console.log('Empty asset number');
+			isValid = false;
 		}
 		if (serialNum === '') {
 			console.log('Empty serial number');
+			isValid = false;
 		}
-		// Make sure AN and SN do not match data already in table
+		return isValid;
+	}
+
+	function exportToCSV(records) {
+		var recordObject = JSON.stringify(records);
+		var array = typeof recordObject != 'object' ? JSON.parse(recordObject) : recordObject;
+		var str = '';
+
+		for (var i = 0; i < array.length; i++) {
+			var line = '';
+			for (var index in array[i]) {
+				if (line != '') line += ',';
+
+				line += array[i][index];
+			}
+			str += line + '\r\n';
+		}
+		if (navigator.appName != 'Microsoft Internet Explorer') {
+			window.open('data:text/csv;charset=utf-8,' + escape(str));
+		} else {
+			var popup = window.open('', 'csv', '');
+			popup.document.body.innerHTML = '<pre>' + str + '</pre>';
+		}
+
+		// return str;
 	}
 });
