@@ -1,4 +1,3 @@
-// TODO: Add a JSON to csv output
 // TODO: Add button for model name that doesn't exist will popup modal which will update DB
 // TODO: Add more fields for relevant information
 $(document).ready(function() {
@@ -33,6 +32,13 @@ $(document).ready(function() {
 	];
 	var modelDataDell = [ 'Inspiron 3000', 'Velicity 332', 'XPS 15', 'XPS 13', 'Alienware 15 R3' ];
 	var modelDataApple = [ 'iMac', 'MacBook Pro', 'iPad', 'iPhone X', 'MacBook Air', 'iMac Pro' ];
+	var headers = {
+		ID: 'Record Row',
+		AssetNumber: 'Asset Number',
+		SerialNumber: 'Serial Number',
+		Manufacturer: 'Manufacturer',
+		Model: 'Model'
+	};
 
 	//creates the manufacturers radio buttons dynamically
 	for (var i = 0; i < manData.length; i++) {
@@ -65,7 +71,7 @@ $(document).ready(function() {
 		$('#assetNumber').focus();
 	});
 	$('#btnExport').on('click', function() {
-		exportToCSV(testHeaders, recordArray, 'thest');
+		exportToCSV(headers, recordArray, 'New Inventory');
 	});
 
 	//create a new JSON object with entered data add it to array of records
@@ -79,7 +85,6 @@ $(document).ready(function() {
 
 		//validate data
 		if (validateFields(valAssetNum, valSerialNum)) {
-			//update DOM to include new record using tables
 			createJSON(valAssetNum, valSerialNum, valManufacturer, valModel);
 			console.log(recordArray);
 
@@ -93,7 +98,6 @@ $(document).ready(function() {
 	function createModelGroup(manuValue) {
 		var selectedManu;
 		$('#modelGroup').css('opacity', 1);
-		console.log(manuValue);
 		if (manuValue === 'HP') {
 			selectedManu = modelDataHP;
 		} else if (manuValue === 'Dell') {
@@ -171,6 +175,7 @@ $(document).ready(function() {
 		}
 		return isValid;
 	}
+
 	function convertToCSV(objArray) {
 		var array = typeof objArray != 'object' ? JSON.parse(objArray) : objArray;
 		var str = '';
@@ -185,12 +190,11 @@ $(document).ready(function() {
 
 			str += line + '\r\n';
 		}
-
 		return str;
 	}
 
 	function exportToCSV(headers, items, fileTitle) {
-		if (headers) {
+		if (headers && items[0].ID !== 'Record Row') {
 			items.unshift(headers);
 		}
 
@@ -219,12 +223,4 @@ $(document).ready(function() {
 			}
 		}
 	}
-
-	var testHeaders = {
-		ID: 'Record Row',
-		AssetNumber: 'Asset Number',
-		SerialNumber: 'Serial Number',
-		Manufacturer: 'Manufacturer',
-		Model: 'model'
-	};
 });
