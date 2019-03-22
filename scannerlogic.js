@@ -32,6 +32,10 @@ $(document).ready(function() {
 	];
 	var modelDataDell = [ 'Inspiron 3000', 'Velicity 332', 'XPS 15', 'XPS 13', 'Alienware 15 R3' ];
 	var modelDataApple = [ 'iMac', 'MacBook Pro', 'iPad', 'iPhone X', 'MacBook Air', 'iMac Pro' ];
+	var bldNum = [ '06', '01', '13' ];
+	var roomNum06 = [ '112', '130', '131', '132', '134', '136', '137' ];
+	var roomNum13 = [ '12', '15', '21' ];
+	var roomNum01 = [ '2200', '2220', '2240', '3600' ];
 	var headers = {
 		ID: 'Record Row',
 		AssetNumber: 'Asset Number',
@@ -52,6 +56,21 @@ $(document).ready(function() {
 		$('#radio_' + manData[i]).change(function() {
 			$('#modelGroup').css('opacity', 0).empty();
 			createModelGroup(this.value);
+		});
+	}
+
+	//creates building and room number buttons dynamically
+	for (var i = 0; i < bldNum.length; i++) {
+		var label = $('<label class="btn btn-info"></label>');
+		label.attr('id', 'Building_' + bldNum[i]).text(bldNum[i]).appendTo('#buildingGroup');
+
+		var manRadio = $('<input name="roomNumbers" autocomplete="off" type="radio">');
+		manRadio.attr('id', 'bldRadio_' + bldNum[i]).attr('value', bldNum[i]).appendTo('#Building_' + bldNum[i]);
+
+		//adding event to radio buttons to add model data
+		$('#bldRadio_' + bldNum[i]).change(function() {
+			$('#roomGroup').css('opacity', 0).empty();
+			createRoomNumberGroup(this.value);
 		});
 	}
 
@@ -95,6 +114,7 @@ $(document).ready(function() {
 	});
 
 	//adding selcted manufacturers models to the form
+	//TODO: Refactor this function to be more generic, may not need when db is working
 	function createModelGroup(manuValue) {
 		var selectedManu;
 		$('#modelGroup').css('opacity', 1);
@@ -111,6 +131,26 @@ $(document).ready(function() {
 			labelModel.attr('id', 'Model_' + i).text(selectedManu[i]).appendTo('#modelGroup');
 			var modelRadio = $('<input name="models" autocomplete="off" type="radio">');
 			modelRadio.attr('id', 'radio_' + i).attr('value', selectedManu[i]).appendTo('#Model_' + i);
+		}
+	}
+
+	// adding selected building room numbers to the form
+	function createRoomNumberGroup(bldValue) {
+		var selectedBld;
+		$('#roomGroup').css('opacity', 1);
+		if (bldValue === '01') {
+			selectedBld = roomNum01;
+		} else if (bldValue === '06') {
+			selectedBld = roomNum06;
+		} else if (bldValue === '13') {
+			selectedBld = roomNum13;
+		}
+
+		for (var i = 0; i < selectedBld.length; i++) {
+			var labelRoom = $('<label class="btn btn-secondary"></label>');
+			labelRoom.attr('id', 'Room_' + i).text(selectedBld[i]).appendTo('#roomGroup');
+			var roomRadio = $('<input name="models" autocomplete="off" type="radio">');
+			roomRadio.attr('id', 'roomRadio_' + i).attr('value', selectedBld[i]).appendTo('#Room_' + i);
 		}
 	}
 
