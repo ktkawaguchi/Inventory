@@ -41,7 +41,9 @@ $(document).ready(function() {
 		AssetNumber: 'Asset Number',
 		SerialNumber: 'Serial Number',
 		Manufacturer: 'Manufacturer',
-		Model: 'Model'
+		Model: 'Model',
+		Building: 'Building',
+		Room: 'Room'
 	};
 
 	//creates the manufacturers radio buttons dynamically
@@ -59,12 +61,12 @@ $(document).ready(function() {
 		});
 	}
 
-	//creates building and room number buttons dynamically
+	//creates building
 	for (var i = 0; i < bldNum.length; i++) {
 		var label = $('<label class="btn btn-info"></label>');
 		label.attr('id', 'Building_' + bldNum[i]).text(bldNum[i]).appendTo('#buildingGroup');
 
-		var manRadio = $('<input name="roomNumbers" autocomplete="off" type="radio">');
+		var manRadio = $('<input name="building" autocomplete="off" type="radio">');
 		manRadio.attr('id', 'bldRadio_' + bldNum[i]).attr('value', bldNum[i]).appendTo('#Building_' + bldNum[i]);
 
 		//adding event to radio buttons to add model data
@@ -87,6 +89,7 @@ $(document).ready(function() {
 		});
 		$(this).closest('form').find('input[type=text], textarea').val('');
 		$('#modelGroup').css('opacity', 0).empty();
+		$('#roomGroup').css('opacity', 0).empty();
 		$('#assetNumber').focus();
 	});
 	$('#btnExport').on('click', function() {
@@ -99,12 +102,14 @@ $(document).ready(function() {
 		var valManufacturer = $("input:radio[name ='manufacturers']:checked").val();
 		var valSerialNum = $('#serialNumber').val();
 		var valModel = $("input:radio[name ='models']:checked").val();
+		var valBuilding = $("input:radio[name ='building']:checked").val();
+		var valRoomNumber = $("input:radio[name ='roomNumbers']:checked").val();
 		var valString = valAssetNum + '  ' + valSerialNum + '  ' + valManufacturer + ' ' + valModel;
 		console.log(valString);
 
 		//validate data
 		if (validateFields(valAssetNum, valSerialNum)) {
-			createJSON(valAssetNum, valSerialNum, valManufacturer, valModel);
+			createJSON(valAssetNum, valSerialNum, valManufacturer, valModel, valBuilding, valRoomNumber);
 			console.log(recordArray);
 
 			//reset text input fields
@@ -149,18 +154,20 @@ $(document).ready(function() {
 		for (var i = 0; i < selectedBld.length; i++) {
 			var labelRoom = $('<label class="btn btn-secondary"></label>');
 			labelRoom.attr('id', 'Room_' + i).text(selectedBld[i]).appendTo('#roomGroup');
-			var roomRadio = $('<input name="models" autocomplete="off" type="radio">');
+			var roomRadio = $('<input name="roomNumbers" autocomplete="off" type="radio">');
 			roomRadio.attr('id', 'roomRadio_' + i).attr('value', selectedBld[i]).appendTo('#Room_' + i);
 		}
 	}
 
-	function createJSON(asset, serial, manufacturer, model) {
+	function createJSON(asset, serial, manufacturer, model, building, room) {
 		var record = {
 			ID: count,
 			AssetNumber: asset,
 			SerialNumber: serial,
 			Manufacturer: manufacturer,
-			Model: model
+			Model: model,
+			Building: building,
+			Room: room
 		};
 		count++;
 		updateTable(record);
